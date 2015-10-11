@@ -1,11 +1,3 @@
-/* Functionality to add
- * Histogram of closest location? Make it look cool?
- * Give a specific coordinate find the closest one?
- * Windrose of closest ones? 
- * Isotype Windrose
- * Randomly change the location, like a person walking + see how rose changes
-
-*/
 var w = 600;
 var h = 600;
 
