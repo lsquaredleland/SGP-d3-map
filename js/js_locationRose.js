@@ -2,10 +2,12 @@
  * Histogram of closest location? Make it look cool?
  * Give a specific coordinate find the closest one?
  * Windrose of closest ones? 
+ * Isotype Windrose
+ * Randomly change the location, like a person walking + see how rose changes
 
 */
-var w = 400;
-var h = 400;
+var w = 600;
+var h = 600;
 
 function deleteRose() {
 	d3.select("#locationRose svg").remove();
@@ -15,7 +17,6 @@ function generateRose(origin) {
   var lat = origin[0];
   var lon = origin[1];
 
-  console.log(ewaste.data)
   var directionQuantity = _.map(ewaste.data, function(data) {
   	return findSegment(12, data.coordinates, origin)
   })
@@ -66,9 +67,6 @@ function findSegment(numSegments, coordinate, origin) {
   	.attr("x2", p_c[0])
   	.attr("y2", p_c[1])
   	.style("stroke", "black")
-  	.on("mouseover", function() {
-  		console.log(angle*180/Math.PI, dist)
-  	})
 
   return Math.floor(angle / (2*Math.PI / numSegments))
 }
@@ -133,7 +131,7 @@ function generateDonut(data){
 	    .data(pie(data))
 	  .enter().append("path")
 	    .each(function(d, i) { 
-	    	d.outerRadius = innerRadius + d.data.val*5;
+	    	d.outerRadius = innerRadius + d.data.val*7;
 
 	    	//for the lines
 	    	var alpha = (d.startAngle + d.endAngle)/2;
@@ -152,8 +150,8 @@ function generateDonut(data){
     		.data(data)
     	.enter().append("rect")
     		.each(function(d,i) {
-    			d.outerRadius = d.val*6;
-    			d.innerRadius = 40;
+    			d.outerRadius = d.val*7;
+    			d.innerRadius = 60;
     			d.alpha = (360/data.length * i + 180 + 15);
 
     			var alpha = (d.alpha - 180)/180*Math.PI;
@@ -171,9 +169,6 @@ function generateDonut(data){
     		.style("stroke", "black")
     		.attr("transform", function(d, i) {
     			return 'rotate(' + d.alpha + ') translate('+ (-rectWidth/2) + ', 0)'
-    		})
-    		.on('mouseover', function(d,i) {
-    			console.log(d,i)
     		})
 
 	drawLines(lines);

@@ -35,7 +35,6 @@ function deleteOldLines() {
 
 function drawCentres(fileName, fill, data) {
   d3.json('location_data/' + fileName + '.json', function(error, ewaste) {
-    console.log(ewaste)
     var coordinates = _.map(ewaste, function(loc) {
       var lat = loc.geometry.coordinates[0];
       var lon = loc.geometry.coordinates[1];
@@ -50,7 +49,7 @@ function drawCentres(fileName, fill, data) {
       .append("circle")
       .attr("cx", function (d) { return projection(d.coordinates)[0]; })
       .attr("cy", function (d) { return projection(d.coordinates)[1]; })
-      .attr("r", "1.5px")
+      .attr("r", 2)
       .attr("fill", fill)
 
     data.data = coordinates;
@@ -64,6 +63,7 @@ svg.on('click', function() {
   deleteOldLines();
   var coords = d3.mouse(this);
   generateRose(projection.invert(coords))
+  generateHistogram(projection.invert(coords))
 })
 
 var recycling_bins = {data: null}
@@ -73,7 +73,7 @@ var secondhandcollection = {data: null}
 drawCentres("ewaste", 'orange', ewaste);
 //drawCentres("secondhandcollection", 'black', secondhandcollection);
 
-
+//Issues here...
 function generateVoronoi(data) {
   function polygon(d) {
     if (d) {
